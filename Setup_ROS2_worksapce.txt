@@ -1,0 +1,49 @@
+Create a ROS2 workspace
+Commands:
+>> mkdir -p ~/ros2_robotic_arm/src
+>> cd ~/ros2_robotic_arm
+>> colcon build
+>> source install/setup.bash
+
+Install ROS2 packages for Gazebo (optional)
+>> sudo apt update
+>> sudo apt install ros-humble-ign-ros-pkgs ros-humble-xacro
+
+Create the robot description
+>> cd ~/ros2_robotic_arm/src
+>> ros2 pkg create --build-type ament_cmake my_robot_description
+
+Create the URDF file
+>> mkdir -p ~/ros2_robotic_arm/src/my_robot_description/urdf
+>> touch ~/ros2_robotic_arm/src/my_robot_description/urdf/mechanical_arm.urdf
+
+Edit the URDF File
+
+Create a launch directory
+>> mkdir -p ~/ros2_robotic_arm/src/my_robot_description/launch
+>> touch ~/ros2_robotic_arm/src/my_robot_description/launch/display.launch.py
+
+Build the workspace
+>> cd ~/ros2_robotic_arm
+colcon build
+source install/setup.bash
+
+Launch the simulation
+>> ros2 launch my_robot_description display.launch.py
+
+Controlling the joint
+>> sudo apt install ros-humble-ros2-control ros-humble-ros2-controllers (Already installed)
+
+Creating a YAML configuration
+>> mkdir -p ~/ros2_robotic_arm/src/my_robot_description/config
+>> touch ~/ros2_robotic_arm/src/my_robot_description/config/controller_config.yaml
+
+Update the launch file to include the controller spawner
+Edit the display.launch.py file
+
+Launch the simulation again
+>> ros2 launch my_robot_description display.launch.py
+
+Control the Arm joint
+>> ros2 topic pub /arm_joint_controller/command std_msgs/msg/Float64 "data: 0.5"
+
